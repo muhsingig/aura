@@ -1,0 +1,127 @@
+.gooey-nav-container {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    /* Create the gooey context */
+    filter: url('#goo');
+    -webkit-filter: url('#goo');
+}
+
+.gooey-nav-container nav {
+    position: relative;
+    z-index: 20;
+}
+
+.gooey-nav-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.gooey-nav-container li {
+    position: relative;
+}
+
+.gooey-nav-container a,
+.gooey-nav-container button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* The floating blob background */
+.effect {
+    position: absolute;
+    border-radius: 50%;
+    background: #D4AF37;
+    /* Brand gold */
+    z-index: 10;
+    pointer-events: none;
+    transition:
+        width 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+        height 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+        left 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+        top 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* For gooey effect to work, we need blur */
+    filter: blur(10px);
+    opacity: 0.8;
+}
+
+/* The text overlay on top of the blob */
+.effect.text {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    color: #1a1a1a;
+    /* Brand dark text on gold blob */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.9rem;
+    filter: none;
+    /* No blur for text */
+    opacity: 0;
+    transition: opacity 0.2s, left 0.6s, top 0.6s, width 0.6s, height 0.6s;
+}
+
+.effect.text.active {
+    opacity: 1;
+}
+
+/* Particles */
+.particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    z-index: 5;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+.particle .point {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--color, #D4AF37);
+    transform: scale(0);
+    animation: particle-anim var(--time) forwards;
+}
+
+@keyframes particle-anim {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(calc(var(--end-x) - var(--start-x)), calc(var(--end-y) - var(--start-y))) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Variables for colors */
+:root {
+    --color-1: #D4AF37;
+    --color-2: #F5E6CC;
+    --color-3: #FFFFFF;
+    --color-4: #8B4513;
+}

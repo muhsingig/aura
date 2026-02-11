@@ -1,0 +1,7 @@
+
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#0B0907" />
+  <circle cx="400" cy="300" r="81.09243697478992" fill="rgb(109, 90, 86)" fill-opacity="0.6554621848739496" />
+  <text x="50%" y="90%" font-family="Arial" font-size="24" fill="white" text-anchor="middle">Frame 38/120</text>
+  <text x="50%" y="50%" font-family="Arial" font-size="48" fill="white" text-anchor="middle">31%</text>
+</svg>
