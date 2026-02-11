@@ -55,6 +55,54 @@ const fallbackProducts: Product[] = [
         price: 330.00,
         image: "/products/cappuccino.png",
         notes: ["Classic", "Foamy", "Balanced"]
+    },
+    {
+        id: "p7",
+        title: "COLD BREW",
+        description: "Steeped for 24 hours to extract the smoothest, richest flavor. Serve over ice for a refreshing, bold coffee experience.",
+        price: 250.00,
+        image: "/products/cold_brew.png",
+        notes: ["Smooth", "Bold", "Refreshing"]
+    },
+    {
+        id: "p8",
+        title: "STRAWBERRY CHEESECAKE FRAPPE",
+        description: "A decadent blend of wild strawberries and creamy cheesecake, topped with whipped cream and biscuit crumble. A dessert in every sip.",
+        price: 550.00,
+        image: "/products/strawberry_cheesecake_frappe.png",
+        notes: ["Fruity", "Creamy", "Indulgent"]
+    },
+    {
+        id: "p9",
+        title: "ICED MOCHA",
+        description: "Rich espresso combined with bittersweet mocha sauce and milk, served over ice. Topped with sweetened whipped cream.",
+        price: 350.00,
+        image: "/products/iced_mocha.png",
+        notes: ["Chocolatey", "Bold", "Icy"]
+    },
+    {
+        id: "p10",
+        title: "STRAWBERRY MATCHA LATTE",
+        description: "Premium earthy matcha layered over sweet strawberry puree and milk. A beautiful and delicious fusion of flavors.",
+        price: 500.00,
+        image: "/products/strawberry_matcha_latte.png",
+        notes: ["Earthy", "Sweet", "Fusion"]
+    },
+    {
+        id: "p11",
+        title: "LOTUS BISCOFF FRAPPE",
+        description: "A creamy masterpiece blending the unique caramelized taste of Lotus Biscoff cookies with rich coffee and milk, topped with whipped cream and cookie crumbles.",
+        price: 480.00,
+        image: "/products/lotus_biscoff_frappe.png",
+        notes: ["Caramelized", "Crunchy", "Premium"]
+    },
+    {
+        id: "p12",
+        title: "PISTACHIO LATTE",
+        description: "Smooth espresso combined with sweet pistachio sauce and steamed milk, finished with a salted brown butter topping.",
+        price: 490.00,
+        image: "/products/pistachio_latte.png",
+        notes: ["Nutty", "Smooth", "Sweet"]
     }
 ];
 

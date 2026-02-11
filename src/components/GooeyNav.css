@@ -3,14 +3,66 @@
     padding: 0;
     margin: 0;
     width: 100%;
-    /* Create the gooey context */
+}
+
+.goo-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Create the gooey context only for this layer */
     filter: url('#goo');
     -webkit-filter: url('#goo');
+    z-index: 10;
 }
 
 .gooey-nav-container nav {
     position: relative;
     z-index: 20;
+}
+
+/* Dropdown Styles */
+.nav-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.gooey-nav-container li:hover .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #F5E6CC;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    transition: all 0.2s;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.nav-dropdown a:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
 }
 
 .gooey-nav-container ul {

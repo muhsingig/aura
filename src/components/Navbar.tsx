@@ -76,6 +76,35 @@ export default function Navbar() {
                                 label: "SHOP",
                                 href: "/shop"
                             },
+                            {
+                                label: "LEARN",
+                                href: "/learn/brewing",
+                                subItems: [
+                                    { label: "Brewing Guides", href: "/learn/brewing" },
+                                    { label: "Coffee Blog", href: "/learn/blog" },
+                                    { label: "FAQ", href: "/learn/faq" },
+                                    { label: "Coffee Quiz", href: "/learn/quiz" }
+                                ]
+                            },
+                            {
+                                label: "MERCH",
+                                href: "/merchandise"
+                            },
+                            {
+                                label: "ABOUT",
+                                href: "/about/story",
+                                subItems: [
+                                    { label: "Our Story", href: "/about/story" },
+                                    { label: "Our Coffee", href: "/about/coffee" },
+                                    { label: "Careers", href: "/about/careers" },
+                                    { label: "Newsroom", href: "/about/newsroom" },
+                                    { label: "Contact", href: "/about/contact" }
+                                ]
+                            },
+                            {
+                                label: "REWARDS",
+                                href: "/rewards"
+                            },
                             ...(user ? [
                                 {
                                     label: (profile?.username || profile?.full_name || user.email?.split('@')[0] || "USER").toUpperCase().slice(0, 10),

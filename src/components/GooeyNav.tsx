@@ -6,6 +6,7 @@ interface NavItem {
     label: string;
     href?: string;
     onClick?: () => void;
+    subItems?: NavItem[];
 }
 
 interface GooeyNavProps {
@@ -168,6 +169,8 @@ const GooeyNav = ({
         return () => resizeObserver.disconnect();
     }, [activeIndex, items]); // Added items dependency to re-calc if menu changes
 
+
+
     return (
         <div className="gooey-nav-container" ref={containerRef}>
             {/* SVG Filter for the Gooey Effect */}
@@ -181,10 +184,16 @@ const GooeyNav = ({
                 </defs>
             </svg>
 
+            {/* Goo Layer - Filter applied here */}
+            <div className="goo-layer">
+                {/* The blob background match */}
+                <span className="effect filter" ref={filterRef} />
+            </div>
+
             <nav>
                 <ul ref={navRef}>
                     {items.map((item, index) => (
-                        <li key={index}>
+                        <li key={index} className="group">
                             {item.href ? (
                                 <Link
                                     href={item.href}
@@ -205,13 +214,22 @@ const GooeyNav = ({
                                     {item.label}
                                 </button>
                             )}
+
+                            {/* Dropdown */}
+                            {item.subItems && (
+                                <div className="nav-dropdown">
+                                    {item.subItems.map((sub, subIndex) => (
+                                        <Link key={subIndex} href={sub.href || '#'} onClick={sub.onClick}>
+                                            {sub.label}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
                         </li>
                     ))}
                 </ul>
             </nav>
-            {/* The blob background match */}
-            <span className="effect filter" ref={filterRef} />
-            {/* The text overlay match */}
+            {/* The text overlay match - Outside goo layer to remain sharp */}
             <span className="effect text" ref={textRef} />
         </div>
     );
