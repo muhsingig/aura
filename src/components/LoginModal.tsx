@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/lib/supabase";
+import { appSupabase } from "@/lib/supabase";
 import { BorderBeam } from "./magicui/border-beam";
 
 interface LoginModalProps {
@@ -24,7 +24,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         setError(null);
         setMessage(null);
 
-        if (!supabase) {
+        if (!appSupabase) {
             setError("Supabase is not configured.");
             setLoading(false);
             return;
@@ -32,7 +32,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
         try {
             if (isSignUp) {
-                const { error, data } = await supabase.auth.signUp({
+                const { error, data } = await appSupabase.auth.signUp({
                     email,
                     password,
                 });
@@ -44,7 +44,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     setMessage("Check your email for the confirmation link!");
                 }
             } else {
-                const { error } = await supabase.auth.signInWithPassword({
+                const { error } = await appSupabase.auth.signInWithPassword({ // Changed from supabase to appSupabase, and kept signInWithPassword
                     email,
                     password,
                 });

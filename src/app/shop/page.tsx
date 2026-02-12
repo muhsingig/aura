@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ProductModal, { Product } from "@/components/ProductModal";
-import { supabase } from "@/lib/supabase";
+import { appSupabase } from "@/lib/supabase";
 import TiltedCard from "@/components/TiltedCard";
 
 // Fallback data if Supabase isn't connected
@@ -113,13 +113,13 @@ export default function Shop() {
 
     useEffect(() => {
         async function fetchProducts() {
-            if (!supabase) {
+            if (!appSupabase) {
                 console.log("Supabase not configured, using fallback data");
                 setLoading(false);
                 return;
             }
 
-            const { data, error } = await supabase
+            const { data, error } = await appSupabase
                 .from('products')
                 .select('*');
 

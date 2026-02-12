@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { appSupabase } from "@/lib/supabase";
 import Lanyard from "@/components/Lanyard";
 
 export default function Profile() {
@@ -20,7 +20,7 @@ export default function Profile() {
     useEffect(() => {
         const getProfile = async () => {
             try {
-                const { data: { session } } = await supabase.auth.getSession();
+                const { data: { session } } = await appSupabase.auth.getSession();
 
                 if (!session) {
                     router.push("/");
@@ -29,7 +29,7 @@ export default function Profile() {
 
                 setUser(session.user);
 
-                const { data, error, status } = await supabase
+                const { data, error, status } = await appSupabase
                     .from('profiles')
                     .select(`id, username, full_name, website, avatar_url`)
                     .eq('id', session.user.id)
@@ -58,7 +58,7 @@ export default function Profile() {
     const updateProfile = async () => {
         try {
             setUploading(true);
-            const { data: { session } } = await supabase.auth.getSession();
+            const { data: { session } } = await appSupabase.auth.getSession();
             if (!session) throw new Error('No user on the session!');
 
             const updates = {
@@ -69,7 +69,7 @@ export default function Profile() {
                 updated_at: new Date().toISOString(),
             };
 
-            const { error } = await supabase.from('profiles').upsert(updates);
+            const { error } = await appSupabase.from('profiles').upsert(updates);
 
             if (error) {
                 throw error;

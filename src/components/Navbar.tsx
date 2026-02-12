@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { appSupabase } from "@/lib/supabase";
 import LoginModal from "./LoginModal";
 import GooeyNav from "./GooeyNav";
 
@@ -16,16 +16,16 @@ export default function Navbar() {
     const [profile, setProfile] = useState<any>(null);
 
     useEffect(() => {
-        if (!supabase) return;
+        if (!appSupabase) return;
 
         // Check active session
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        appSupabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
             if (session?.user) fetchProfile(session.user.id);
         });
 
         // Listen for auth changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = appSupabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
             if (session?.user) {
                 fetchProfile(session.user.id);
@@ -38,8 +38,8 @@ export default function Navbar() {
     }, []);
 
     const fetchProfile = async (userId: string) => {
-        if (!supabase) return;
-        const { data } = await supabase
+        if (!appSupabase) return;
+        const { data } = await appSupabase
             .from('profiles')
             .select('username, full_name')
             .eq('id', userId)
@@ -49,8 +49,8 @@ export default function Navbar() {
     };
 
     const handleLogout = async () => {
-        if (supabase) {
-            await supabase.auth.signOut();
+        if (appSupabase) {
+            const { error } = await appSupabase.auth.signOut();
         }
     };
 
