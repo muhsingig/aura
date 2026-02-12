@@ -6,14 +6,14 @@ export interface BrewingMethod {
     name: string;
     icon: any;
     tagline: string;
-    difficulty: "Beginner" | "Intermediate" | "Advanced";
+    difficulty: "Beginner" | "Beginner-Intermediate" | "Intermediate" | "Advanced";
     time: string;
     bestFor: string;
     description: string;
     color: string;
     equipment: string[];
     ratio: string;
-    grind: "Fine" | "Medium-Fine" | "Medium" | "Coarse";
+    grind: string;
     steps: { title: string; desc: string }[];
     tips: string[];
 }
