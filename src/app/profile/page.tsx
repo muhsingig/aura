@@ -21,6 +21,7 @@ export default function Profile() {
         if (!supabase) return;
 
         const getProfile = async () => {
+            if (!supabase) return;
             try {
                 const { data: { session } } = await supabase.auth.getSession();
 
@@ -58,6 +59,7 @@ export default function Profile() {
     }, [router]);
 
     const updateProfile = async () => {
+        if (!supabase) return;
         try {
             setUploading(true);
             const { data: { session } } = await supabase.auth.getSession();
