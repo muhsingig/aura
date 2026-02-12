@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { SupabaseClient } from "@supabase/supabase-js";
 import Lanyard from "@/components/Lanyard";
 
 export default function Profile() {
@@ -23,8 +24,9 @@ export default function Profile() {
         if (!supabaseClient) return;
 
         const getProfile = async () => {
+            const client = supabaseClient as SupabaseClient;
             try {
-                const { data: { session } } = await supabaseClient.auth.getSession();
+                const { data: { session } } = await client.auth.getSession();
 
                 if (!session) {
                     router.push("/");
@@ -33,7 +35,7 @@ export default function Profile() {
 
                 setUser(session.user);
 
-                const { data, error, status } = await supabaseClient
+                const { data, error, status } = await client
                     .from('profiles')
                     .select(`id, username, full_name, website, avatar_url`)
                     .eq('id', session.user.id)
@@ -63,9 +65,11 @@ export default function Profile() {
         const supabaseClient = supabase;
         if (!supabaseClient) return;
 
+        const client = supabaseClient as SupabaseClient;
+
         try {
             setUploading(true);
-            const { data: { session } } = await supabaseClient.auth.getSession();
+            const { data: { session } } = await client.auth.getSession();
             if (!session) throw new Error('No user on the session!');
 
             const updates = {
@@ -76,7 +80,7 @@ export default function Profile() {
                 updated_at: new Date().toISOString(),
             };
 
-            const { error } = await supabaseClient.from('profiles').upsert(updates);
+            const { error } = await client.from('profiles').upsert(updates);
 
             if (error) {
                 throw error;
