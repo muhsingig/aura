@@ -18,12 +18,13 @@ export default function Profile() {
     const router = useRouter();
 
     useEffect(() => {
-        if (!supabase) return;
+        // Alias to local variable for TS narrowing
+        const supabaseClient = supabase;
+        if (!supabaseClient) return;
 
         const getProfile = async () => {
-            if (!supabase) return;
             try {
-                const { data: { session } } = await supabase.auth.getSession();
+                const { data: { session } } = await supabaseClient.auth.getSession();
 
                 if (!session) {
                     router.push("/");
@@ -32,7 +33,7 @@ export default function Profile() {
 
                 setUser(session.user);
 
-                const { data, error, status } = await supabase
+                const { data, error, status } = await supabaseClient
                     .from('profiles')
                     .select(`id, username, full_name, website, avatar_url`)
                     .eq('id', session.user.id)
@@ -59,10 +60,12 @@ export default function Profile() {
     }, [router]);
 
     const updateProfile = async () => {
-        if (!supabase) return;
+        const supabaseClient = supabase;
+        if (!supabaseClient) return;
+
         try {
             setUploading(true);
-            const { data: { session } } = await supabase.auth.getSession();
+            const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) throw new Error('No user on the session!');
 
             const updates = {
@@ -73,7 +76,7 @@ export default function Profile() {
                 updated_at: new Date().toISOString(),
             };
 
-            const { error } = await supabase.from('profiles').upsert(updates);
+            const { error } = await supabaseClient.from('profiles').upsert(updates);
 
             if (error) {
                 throw error;
