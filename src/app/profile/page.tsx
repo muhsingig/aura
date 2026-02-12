@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { SupabaseClient } from "@supabase/supabase-js";
 import Lanyard from "@/components/Lanyard";
 
 export default function Profile() {
@@ -19,14 +18,9 @@ export default function Profile() {
     const router = useRouter();
 
     useEffect(() => {
-        // Alias to local variable for TS narrowing
-        const supabaseClient = supabase;
-        if (!supabaseClient) return;
-
         const getProfile = async () => {
-            const client = supabaseClient as SupabaseClient;
             try {
-                const { data: { session } } = await client.auth.getSession();
+                const { data: { session } } = await supabase.auth.getSession();
 
                 if (!session) {
                     router.push("/");
@@ -35,7 +29,7 @@ export default function Profile() {
 
                 setUser(session.user);
 
-                const { data, error, status } = await client
+                const { data, error, status } = await supabase
                     .from('profiles')
                     .select(`id, username, full_name, website, avatar_url`)
                     .eq('id', session.user.id)
@@ -62,14 +56,9 @@ export default function Profile() {
     }, [router]);
 
     const updateProfile = async () => {
-        const supabaseClient = supabase;
-        if (!supabaseClient) return;
-
-        const client = supabaseClient as SupabaseClient;
-
         try {
             setUploading(true);
-            const { data: { session } } = await client.auth.getSession();
+            const { data: { session } } = await supabase.auth.getSession();
             if (!session) throw new Error('No user on the session!');
 
             const updates = {
@@ -80,7 +69,7 @@ export default function Profile() {
                 updated_at: new Date().toISOString(),
             };
 
-            const { error } = await client.from('profiles').upsert(updates);
+            const { error } = await supabase.from('profiles').upsert(updates);
 
             if (error) {
                 throw error;
