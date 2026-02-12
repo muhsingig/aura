@@ -91,35 +91,107 @@ export default function ContactPage() {
                         </div>
                     </div>
 
-                    {/* Contact Form */}
+
+                    {/* Custom Contact Form → submits to Google Form via fetch */}
                     <div className="bg-brand-cream/5 p-10 rounded-3xl border border-brand-cream/10">
                         <h3 className="text-3xl font-heading font-bold mb-8">SEND A MESSAGE</h3>
-                        <form className="space-y-6">
+                        <form
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+                                const form = e.currentTarget;
+                                const btn = form.querySelector('button[type=submit]') as HTMLButtonElement;
+
+                                // Show sending state
+                                if (btn) {
+                                    btn.textContent = 'SENDING...';
+                                    btn.disabled = true;
+                                }
+
+                                const formData = new FormData(form);
+                                const params = new URLSearchParams();
+                                formData.forEach((value, key) => {
+                                    params.append(key, value as string);
+                                });
+
+                                try {
+                                    await fetch(
+                                        'https://docs.google.com/forms/d/e/1FAIpQLSdWs4YnDe56FwHYb-vVSm_eT91YVNu64unscSFQx4j7fbjROQ/formResponse',
+                                        {
+                                            method: 'POST',
+                                            body: params,
+                                            mode: 'no-cors',
+                                        }
+                                    );
+                                } catch (err) {
+                                    // no-cors will always succeed for form submissions
+                                }
+
+                                // Show success
+                                form.reset();
+                                if (btn) {
+                                    btn.textContent = '✓ MESSAGE SENT!';
+                                    btn.disabled = false;
+                                    btn.classList.add('bg-green-600');
+                                    btn.classList.remove('bg-brand-gold');
+                                    setTimeout(() => {
+                                        btn.textContent = 'SEND MESSAGE';
+                                        btn.classList.remove('bg-green-600');
+                                        btn.classList.add('bg-brand-gold');
+                                    }, 3000);
+                                }
+                            }}
+                            className="space-y-6"
+                        >
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold tracking-widest opacity-60">NAME</label>
-                                    <input type="text" className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors" placeholder="Jane Doe" />
+                                    <input
+                                        type="text"
+                                        name="entry.795368653"
+                                        required
+                                        className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors"
+                                        placeholder="Jane Doe"
+                                    />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold tracking-widest opacity-60">EMAIL</label>
-                                    <input type="email" className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors" placeholder="jane@example.com" />
+                                    <input
+                                        type="email"
+                                        name="entry.1131498052"
+                                        required
+                                        className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors"
+                                        placeholder="jane@example.com"
+                                    />
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-bold tracking-widest opacity-60">SUBJECT</label>
-                                <select className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors appearance-none text-brand-cream/80">
-                                    <option>General Inquiry</option>
-                                    <option>Order Support</option>
-                                    <option>Wholesale</option>
-                                    <option>Press</option>
-                                    <option>Careers</option>
+                                <select
+                                    name="entry.108611783"
+                                    required
+                                    className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors appearance-none text-brand-cream/80"
+                                >
+                                    <option value="">Select a subject</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                    <option value="Order Support">Order Support</option>
+                                    <option value="Wholesale">Wholesale</option>
+                                    <option value="Careers">Careers</option>
                                 </select>
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-bold tracking-widest opacity-60">MESSAGE</label>
-                                <textarea rows={6} className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors" placeholder="How can we help?" />
+                                <textarea
+                                    name="entry.294570227"
+                                    rows={6}
+                                    required
+                                    className="w-full bg-brand-dark border border-brand-cream/20 rounded-lg p-4 focus:outline-none focus:border-brand-gold transition-colors"
+                                    placeholder="How can we help?"
+                                />
                             </div>
-                            <button type="submit" className="w-full bg-brand-gold text-brand-dark font-bold text-lg py-4 rounded-lg hover:bg-white transition-colors">
+                            <button
+                                type="submit"
+                                className="w-full bg-brand-gold text-brand-dark font-bold text-lg py-4 rounded-lg hover:bg-white transition-colors"
+                            >
                                 SEND MESSAGE
                             </button>
                         </form>
