@@ -5,12 +5,16 @@ import { useState } from "react";
 import { merchProducts, merchCategories, MerchProduct } from "@/lib/merch-data";
 import { Search, ShoppingBag, Star, Heart, Gift, Leaf } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import SpotlightCard from "@/components/SpotlightCard";
 
 // --- Components ---
 
 const MerchCard = ({ product }: { product: MerchProduct }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [imgError, setImgError] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
     const { addToCart } = useCart();
 
     const handleAddToCart = (e: React.MouseEvent) => {
@@ -23,9 +27,15 @@ const MerchCard = ({ product }: { product: MerchProduct }) => {
         });
     };
 
+    const toggleLike = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsLiked(!isLiked);
+    };
+
     return (
         <div
-            className="group relative bg-brand-dark border border-brand-cream/5 rounded-sm overflow-hidden hover:border-brand-gold/30 transition-colors"
+            className="flex flex-col h-full bg-brand-dark border border-brand-cream/5 rounded-sm overflow-hidden hover:border-brand-gold/30 transition-colors group"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -42,47 +52,58 @@ const MerchCard = ({ product }: { product: MerchProduct }) => {
                 </div>
 
                 {/* Wishlist Button */}
-                <button className="absolute top-3 right-3 z-20 p-2 text-brand-cream/50 hover:text-brand-gold transition-colors">
-                    <Heart size={20} />
+                <button
+                    onClick={toggleLike}
+                    className={`absolute top-3 right-3 z-20 p-2 transition-colors ${isLiked ? 'text-red-500' : 'text-brand-cream/50 hover:text-brand-gold'}`}
+                >
+                    <Heart size={20} className={isLiked ? 'fill-current' : ''} />
                 </button>
 
                 {/* Main Image */}
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-                    {/* Using placeholders for now since real images might not exist yet */}
                     <div className="w-full h-full bg-brand-cream/10 flex items-center justify-center text-brand-cream/20 font-bold text-xl relative">
-                        {/* Fallback text if image load fails or is placeholder */}
-                        <span>{product.name}</span>
-                        {/* If we had real images: */}
-                        {/* <Image src={isHovered && product.images[1] ? product.images[1] : product.images[0]} alt={product.name} fill className="object-cover" /> */}
+                        {!imgError && product.images && product.images.length > 0 ? (
+                            <SpotlightCard className="w-full h-full relative">
+                                <Image
+                                    src={isHovered && product.images[1] ? product.images[1] : product.images[0]}
+                                    alt={product.name}
+                                    fill
+                                    className="object-cover"
+                                    onError={() => setImgError(true)}
+                                />
+                            </SpotlightCard>
+                        ) : (
+                            <span>{product.name}</span>
+                        )}
                     </div>
                 </div>
 
-                {/* Quick Add Overlay */}
-                <button
-                    onClick={handleAddToCart}
-                    className="w-full bg-brand-gold text-brand-dark font-bold py-3 uppercase tracking-widest text-sm hover:bg-white transition-colors flex items-center justify-center gap-2"
-                >
-                    <ShoppingBag size={16} /> Add to Cart
-                </button>
             </div>
-
 
             {/* Content */}
-            <div className="p-5">
+            <div className="p-5 flex flex-col flex-1">
                 <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-heading font-bold text-brand-cream group-hover:text-brand-gold transition-colors">{product.name}</h3>
-                    <span className="font-sans font-bold text-brand-gold">₹{product.price}</span>
+                    <span className="font-sans font-bold text-brand-gold ml-2 flex-shrink-0">₹{product.price}</span>
                 </div>
-                <p className="text-sm text-brand-cream/60 line-clamp-1 mb-3">{product.tagline}</p>
+                <p className="text-sm text-brand-cream/60 line-clamp-2 mb-4 flex-1">{product.tagline}</p>
 
-                {/* Rating */}
-                <div className="flex items-center gap-1 text-xs text-brand-cream/40">
-                    <Star size={12} className="text-brand-gold fill-brand-gold" />
-                    <span className="text-brand-gold">{product.rating}</span>
-                    <span>({product.reviews})</span>
+                {/* Rating & Actions */}
+                <div className="mt-auto flex flex-col gap-4">
+                    <div className="flex items-center gap-1 text-xs text-brand-cream/40">
+                        <Star size={12} className="text-brand-gold fill-brand-gold" />
+                        <span className="text-brand-gold">{product.rating}</span>
+                        <span>({product.reviews})</span>
+                    </div>
+                    <button
+                        onClick={handleAddToCart}
+                        className="w-full bg-brand-gold text-brand-dark font-bold py-3 uppercase tracking-widest text-sm hover:bg-white transition-colors flex items-center justify-center gap-2 rounded-sm"
+                    >
+                        <ShoppingBag size={16} /> Add to Cart
+                    </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
@@ -235,8 +256,12 @@ export default function MerchandisePage() {
                         </button>
                     </div>
                     <div className="flex-1 w-full bg-brand-dark/10 h-80 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                        {/* Placeholder for Gift Image */}
-                        <div className="text-brand-dark/20 font-heading font-bold text-4xl">GIFT BUNDLE VISUAL</div>
+                        <Image
+                            src="/products/merch/gift-bundle.png"
+                            alt="Gift Bundle"
+                            fill
+                            className="object-cover hover:scale-105 transition-transform duration-700"
+                        />
                     </div>
                 </div>
             </section>

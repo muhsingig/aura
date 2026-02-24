@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FileText, Download, ExternalLink, ArrowRight, Calendar, Tag } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import ElectricBorder from "@/components/ElectricBorder";
 
 const pressReleases = [
     {
@@ -64,27 +65,37 @@ export default function NewsroomPage() {
             {/* Featured Story */}
             <section className="py-24 px-6 bg-brand-dark">
                 <div className="container mx-auto max-w-6xl">
-                    <div className="bg-brand-cream/5 rounded-2xl overflow-hidden border border-brand-cream/10 hover:border-brand-gold/50 transition-colors flex flex-col md:flex-row">
-                        <div className="md:w-1/2 h-64 md:h-auto bg-brand-cream/10 relative">
-                            {/* Placeholder Image */}
-                            <div className="absolute inset-0 flex items-center justify-center text-brand-cream/20 font-bold text-xl">
-                                FEATURED IMAGE
+                    <ElectricBorder
+                        color="#ffc800"
+                        speed={0.1}
+                        chaos={0.01}
+                        thickness={2}
+                        style={{ borderRadius: 16 }}
+                    >
+                        <div className="bg-brand-cream/5 rounded-2xl overflow-hidden border border-brand-cream/10 hover:border-brand-gold/50 transition-colors flex flex-col md:flex-row">
+                            <div className="md:w-1/2 min-h-[300px] h-64 md:h-auto bg-brand-cream/10 relative">
+                                <Image
+                                    src="/products/app-launch.jpg"
+                                    alt="Aura Mobile App Launch"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="md:w-1/2 p-12 flex flex-col justify-center">
+                                <div className="flex items-center gap-2 text-brand-gold mb-4 text-xs font-bold tracking-widest uppercase">
+                                    <span className="bg-brand-gold/10 px-3 py-1 rounded-full">New Release</span>
+                                    <span>Oct 01, 2025</span>
+                                </div>
+                                <h2 className="text-3xl font-heading font-bold mb-4">AURA LAUNCHES MOBILE ORDERING APP</h2>
+                                <p className="text-brand-cream/70 leading-relaxed mb-8">
+                                    Experience skip-the-line convenience and earn rewards with every sip. Our new app is designed to make your daily coffee ritual smoother than ever.
+                                </p>
+                                <Link href="#" className="inline-flex items-center text-brand-cream font-bold tracking-widest hover:text-brand-gold transition-colors">
+                                    READ FULL STORY <ArrowRight size={16} className="ml-2" />
+                                </Link>
                             </div>
                         </div>
-                        <div className="md:w-1/2 p-12 flex flex-col justify-center">
-                            <div className="flex items-center gap-2 text-brand-gold mb-4 text-xs font-bold tracking-widest uppercase">
-                                <span className="bg-brand-gold/10 px-3 py-1 rounded-full">New Release</span>
-                                <span>Oct 01, 2025</span>
-                            </div>
-                            <h2 className="text-3xl font-heading font-bold mb-4">AURA LAUNCHES MOBILE ORDERING APP</h2>
-                            <p className="text-brand-cream/70 leading-relaxed mb-8">
-                                Experience skip-the-line convenience and earn rewards with every sip. Our new app is designed to make your daily coffee ritual smoother than ever.
-                            </p>
-                            <Link href="#" className="inline-flex items-center text-brand-cream font-bold tracking-widest hover:text-brand-gold transition-colors">
-                                READ FULL STORY <ArrowRight size={16} className="ml-2" />
-                            </Link>
-                        </div>
-                    </div>
+                    </ElectricBorder>
                 </div>
             </section>
 

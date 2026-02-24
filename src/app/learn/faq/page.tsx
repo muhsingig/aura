@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ChevronDown, ChevronUp, MessageCircle, HelpCircle } from "lucide-react";
+import ScrollFloat from "@/components/ScrollFloat";
 
 interface FAQItem {
     q: string;
@@ -50,7 +51,16 @@ export default function FAQPage() {
 
             {/* Header */}
             <div className="py-20 px-6 text-center">
-                <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6 tracking-tighter">HOW CAN WE HELP?</h1>
+                <ScrollFloat
+                    containerClassName="text-5xl md:text-6xl font-heading font-bold mb-6 tracking-tighter"
+                    animationDuration={1}
+                    ease="back.inOut(2)"
+                    scrollStart="center bottom+=50%"
+                    scrollEnd="bottom bottom-=40%"
+                    stagger={0.03}
+                >
+                    HOW CAN WE HELP?
+                </ScrollFloat>
 
                 {/* Search Bar */}
                 <div className="max-w-2xl mx-auto relative">
@@ -74,8 +84,8 @@ export default function FAQPage() {
                             key={cat}
                             onClick={() => setSelectedCategory(cat)}
                             className={`px-6 py-2 rounded-full font-bold text-sm tracking-wide transition-all ${selectedCategory === cat
-                                    ? "bg-brand-gold text-brand-dark"
-                                    : "bg-brand-cream/5 hover:bg-brand-cream/10 text-brand-cream/60"
+                                ? "bg-brand-gold text-brand-dark"
+                                : "bg-brand-cream/5 hover:bg-brand-cream/10 text-brand-cream/60"
                                 }`}
                         >
                             {cat}

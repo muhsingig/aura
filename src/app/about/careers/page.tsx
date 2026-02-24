@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Users, Heart, Zap, Coffee, ArrowRight, CheckCircle, MapPin, Clock } from "lucide-react";
 import Image from "next/image";
+import MagicBento from "@/components/MagicBento";
 
 const benefits = [
     { icon: Heart, title: "Health & Wellness", desc: "Comprehensive medical, dental, and vision coverage for you and your family." },
@@ -49,24 +50,24 @@ export default function CareersPage() {
                         <h2 className="text-4xl font-heading font-bold mt-2">WHY WORK AT AURA?</h2>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {benefits.map((item, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="bg-brand-cream/5 p-8 rounded-2xl border border-brand-cream/5 hover:border-brand-gold/50 transition-colors"
-                            >
-                                <div className="w-12 h-12 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6">
-                                    <item.icon size={24} />
-                                </div>
-                                <h3 className="text-xl font-heading font-bold mb-3">{item.title}</h3>
-                                <p className="text-brand-cream/60 leading-relaxed text-sm">{item.desc}</p>
-                            </motion.div>
-                        ))}
-                    </div>
+                    <MagicBento
+                        cards={benefits.map(b => ({
+                            title: b.title,
+                            description: b.desc,
+                            icon: <b.icon size={24} />
+                        }))}
+                        textAutoHide={true}
+                        enableStars
+                        enableSpotlight
+                        enableBorderGlow={true}
+                        enableTilt={false}
+                        enableMagnetism={false}
+                        clickEffect
+                        spotlightRadius={400}
+                        particleCount={12}
+                        glowColor="132, 0, 255"
+                        disableAnimations={false}
+                    />
                 </div>
             </section>
 
@@ -95,9 +96,12 @@ export default function CareersPage() {
                             </div>
                         </div>
                         <div className="flex-1 relative h-[500px] w-full bg-brand-dark rounded-2xl overflow-hidden shadow-2xl">
-                            <div className="absolute inset-0 flex items-center justify-center text-brand-cream/20 font-bold text-2xl">
-                                TEAM PHOTO PLACEHOLDER
-                            </div>
+                            <Image
+                                src="/products/team3.jpg"
+                                alt="Aura Coffee Team 3"
+                                fill
+                                className="object-cover"
+                            />
                         </div>
                     </div>
                 </div>

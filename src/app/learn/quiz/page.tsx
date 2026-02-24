@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight, RefreshCcw, Check, Coffee } from "lucide-react";
+import ElectricBorder from "@/components/ElectricBorder";
 
 // Questions
 const questions = [
@@ -111,18 +112,27 @@ export default function CoffeeQuiz() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-brand-cream/5 border border-brand-cream/10 rounded-2xl p-12 backdrop-blur-md"
                     >
-                        <h1 className="text-5xl md:text-7xl font-heading font-bold text-brand-gold mb-6 tracking-tighter">FIND YOUR PERFECT MATCH</h1>
-                        <p className="text-xl text-brand-cream/80 mb-10 font-sans leading-relaxed">
-                            Not sure which beans to buy? Take our 2-minute quiz to discover the coffee that matches your taste profile.
-                        </p>
-                        <button
-                            onClick={() => setStarted(true)}
-                            className="bg-brand-gold text-brand-dark px-10 py-5 rounded-full font-bold text-lg tracking-widest hover:scale-105 transition-transform shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+                        <ElectricBorder
+                            color="#ffc800"
+                            speed={0.1}
+                            chaos={0.01}
+                            thickness={2}
+                            style={{ borderRadius: 16 }}
                         >
-                            START QUIZ
-                        </button>
+                            <div className="bg-brand-cream/5 border border-brand-cream/10 rounded-2xl p-12 backdrop-blur-md">
+                                <h1 className="text-5xl md:text-7xl font-heading font-bold text-brand-gold mb-6 tracking-tighter">FIND YOUR PERFECT MATCH</h1>
+                                <p className="text-xl text-brand-cream/80 mb-10 font-sans leading-relaxed">
+                                    Not sure which beans to buy? Take our 2-minute quiz to discover the coffee that matches your taste profile.
+                                </p>
+                                <button
+                                    onClick={() => setStarted(true)}
+                                    className="bg-brand-gold text-brand-dark px-10 py-5 rounded-full font-bold text-lg tracking-widest hover:scale-105 transition-transform shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+                                >
+                                    START QUIZ
+                                </button>
+                            </div>
+                        </ElectricBorder>
                     </motion.div>
                 </div>
             </div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Click the lanyard</h2>
+  <script>
+    function loc(name, event) {
+      console.log("CLICKED " + name + " at X:" + event.offsetX + " Y:" + event.offsetY);
+      alert("CLICKED " + name + " at X:" + event.offsetX + " Y:" + event.offsetY);
+    }
+  </script>
+  <h3>team1.jpg</h3>
+  <img src="/products/team1.jpg" style="max-width: 600px;" onclick="loc('team1', event)" />
+  <h3>team2.jpg</h3>
+  <img src="/products/team2.jpg" style="max-width: 600px;" onclick="loc('team2', event)" />
+  <h3>team3.jpg</h3>
+  <img src="/products/team3.jpg" style="max-width: 600px;" onclick="loc('team3', event)" />
+  <h3>brewing.jpg</h3>
+  <img src="/products/brewing.jpg" style="max-width: 600px;" onclick="loc('brewing', event)" />
+  <h3>sourcing.jpg</h3>
+  <img src="/products/sourcing.jpg" style="max-width: 600px;" onclick="loc('sourcing', event)" />
+</body>
+</html>

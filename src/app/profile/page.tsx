@@ -20,6 +20,13 @@ export default function Profile() {
     useEffect(() => {
         const getProfile = async () => {
             try {
+                // Safety check in case the Supabase client is not initialized
+                if (!appSupabase) {
+                    console.error("Supabase client is not configured");
+                    router.push("/");
+                    return;
+                }
+
                 const { data: { session } } = await appSupabase.auth.getSession();
 
                 if (!session) {
@@ -58,6 +65,11 @@ export default function Profile() {
     const updateProfile = async () => {
         try {
             setUploading(true);
+
+            if (!appSupabase) {
+                throw new Error("Supabase client is not configured");
+            }
+
             const { data: { session } } = await appSupabase.auth.getSession();
             if (!session) throw new Error('No user on the session!');
 

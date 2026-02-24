@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search, Clock, Calendar, ChevronRight } from "lucide-react";
 import { blogPosts, categories } from "@/lib/blog-data";
+import ElectricBorder from "@/components/ElectricBorder";
 
 export default function BlogPage() {
     const [selectedCategory, setSelectedCategory] = useState("All");
@@ -40,8 +41,8 @@ export default function BlogPage() {
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
                                 className={`px-6 py-2 rounded-full text-sm font-bold tracking-wide transition-all ${selectedCategory === cat
-                                        ? "bg-brand-gold text-brand-dark"
-                                        : "bg-brand-cream/5 hover:bg-brand-cream/10 border border-brand-cream/10"
+                                    ? "bg-brand-gold text-brand-dark"
+                                    : "bg-brand-cream/5 hover:bg-brand-cream/10 border border-brand-cream/10"
                                     }`}
                             >
                                 {cat.toUpperCase()}
@@ -71,37 +72,47 @@ export default function BlogPage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="group bg-brand-cream/5 border border-brand-cream/10 rounded-2xl overflow-hidden hover:border-brand-gold/30 transition-colors"
                             >
-                                <div className="h-56 bg-brand-cream/5 relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-brand-dark/20 z-10 group-hover:bg-transparent transition-colors duration-500" />
-                                    <Image
-                                        src={post.image}
-                                        alt={post.title}
-                                        fill
-                                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                                    />
-                                    <div className="absolute top-4 left-4 z-20 bg-brand-dark/80 backdrop-blur px-3 py-1 rounded text-xs font-bold text-brand-gold uppercase tracking-wider">
-                                        {post.category}
-                                    </div>
-                                </div>
-                                <div className="p-8">
-                                    <div className="flex items-center gap-4 text-xs font-bold text-brand-cream/40 mb-4 uppercase tracking-widest">
-                                        <div className="flex items-center gap-1"><Calendar size={12} /> {post.date}</div>
-                                        <div className="flex items-center gap-1"><Clock size={12} /> {post.readTime}</div>
-                                    </div>
-                                    <Link href={`#`} className="block">
-                                        <h2 className="text-2xl font-bold font-heading mb-3 group-hover:text-brand-gold transition-colors leading-tight">{post.title}</h2>
-                                    </Link>
-                                    <p className="text-brand-cream/60 leading-relaxed mb-6 line-clamp-3">{post.excerpt}</p>
+                                <ElectricBorder
+                                    color="#ffc800"
+                                    speed={0.1}
+                                    chaos={0.01}
+                                    thickness={2}
+                                    style={{ borderRadius: 16 }}
+                                    className="h-full block"
+                                >
+                                    <div className="group h-full bg-brand-cream/5 border border-brand-cream/10 rounded-2xl overflow-hidden hover:border-brand-gold/30 transition-colors flex flex-col">
+                                        <div className="h-56 bg-brand-cream/5 relative overflow-hidden">
+                                            <div className="absolute inset-0 bg-brand-dark/20 z-10 group-hover:bg-transparent transition-colors duration-500" />
+                                            <Image
+                                                src={post.image}
+                                                alt={post.title}
+                                                fill
+                                                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                            />
+                                            <div className="absolute top-4 left-4 z-20 bg-brand-dark/80 backdrop-blur px-3 py-1 rounded text-xs font-bold text-brand-gold uppercase tracking-wider">
+                                                {post.category}
+                                            </div>
+                                        </div>
+                                        <div className="p-8 flex-grow flex flex-col">
+                                            <div className="flex items-center gap-4 text-xs font-bold text-brand-cream/40 mb-4 uppercase tracking-widest">
+                                                <div className="flex items-center gap-1"><Calendar size={12} /> {post.date}</div>
+                                                <div className="flex items-center gap-1"><Clock size={12} /> {post.readTime}</div>
+                                            </div>
+                                            <Link href={`#`} className="block">
+                                                <h2 className="text-2xl font-bold font-heading mb-3 group-hover:text-brand-gold transition-colors leading-tight">{post.title}</h2>
+                                            </Link>
+                                            <p className="text-brand-cream/60 leading-relaxed mb-6 line-clamp-3">{post.excerpt}</p>
 
-                                    <div className="flex items-center justify-between border-t border-brand-cream/10 pt-6 mt-auto">
-                                        <div className="text-xs font-bold uppercase tracking-widest opacity-60">By {post.author}</div>
-                                        <Link href="#" className="text-brand-gold font-bold text-sm tracking-widest flex items-center hover:gap-2 transition-all">
-                                            READ <ChevronRight size={16} className="ml-1" />
-                                        </Link>
+                                            <div className="flex items-center justify-between border-t border-brand-cream/10 pt-6 mt-auto">
+                                                <div className="text-xs font-bold uppercase tracking-widest opacity-60">By {post.author}</div>
+                                                <Link href="#" className="text-brand-gold font-bold text-sm tracking-widest flex items-center hover:gap-2 transition-all">
+                                                    READ <ChevronRight size={16} className="ml-1" />
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </ElectricBorder>
                             </motion.div>
                         ))}
                     </div>

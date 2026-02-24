@@ -58,12 +58,12 @@ export default function Navbar() {
         <>
             <nav className="fixed top-0 left-0 w-full p-6 z-40 flex justify-between items-center mix-blend-difference text-brand-cream">
                 {/* Logo */}
-                <Link href="/" className="relative w-32 h-12 block hover:opacity-80 transition-opacity">
+                <Link href="/" className="relative w-[80px] h-[80px] md:w-[100px] md:h-[100px] block hover:opacity-80 transition-opacity scale-125 transform origin-left">
                     <Image
                         src="/logo.png"
                         alt="AURA"
                         fill
-                        className="object-contain object-left"
+                        className="object-contain"
                         priority
                     />
                 </Link>

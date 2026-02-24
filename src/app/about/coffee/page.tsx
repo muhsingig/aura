@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Coffee, Sprout, Truck, Globe, ThermometerSun, Leaf, Info, Filter, ArrowRight } from "lucide-react";
+import MagicBento from "@/components/MagicBento";
 
 export default function OurCoffeePage() {
     return (
@@ -31,40 +32,39 @@ export default function OurCoffeePage() {
             {/* Quality Promise - 3 Pillars */}
             <section className="py-24 px-6 bg-brand-dark">
                 <div className="container mx-auto max-w-7xl">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                        {/* Pillar 1 */}
-                        <div className="text-center p-8 border border-brand-cream/10 rounded-2xl hover:border-brand-gold/50 transition-colors group">
-                            <div className="w-16 h-16 bg-brand-cream/5 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-gold/20 transition-colors">
-                                <Sprout size={32} className="text-brand-gold" />
-                            </div>
-                            <h3 className="text-2xl font-heading font-bold mb-4">ETHICALLY SOURCED</h3>
-                            <p className="text-brand-cream/70 leading-relaxed">
-                                We work closely with producers to ensure that the beans are of the highest quality, grown sustainably and traded responsibly from farms in Ethiopia, Colombia, and Guatemala.
-                            </p>
-                        </div>
-
-                        {/* Pillar 2 */}
-                        <div className="text-center p-8 border border-brand-cream/10 rounded-2xl hover:border-brand-gold/50 transition-colors group">
-                            <div className="w-16 h-16 bg-brand-cream/5 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-gold/20 transition-colors">
-                                <ThermometerSun size={32} className="text-brand-gold" />
-                            </div>
-                            <h3 className="text-2xl font-heading font-bold mb-4">FRESHLY ROASTED</h3>
-                            <p className="text-brand-cream/70 leading-relaxed">
-                                We specially roast your coffee in our in-house, state-of-the-art coffee roaster with specific profiles to ensure optimal flavour notes and potent aromatics.
-                            </p>
-                        </div>
-
-                        {/* Pillar 3 */}
-                        <div className="text-center p-8 border border-brand-cream/10 rounded-2xl hover:border-brand-gold/50 transition-colors group">
-                            <div className="w-16 h-16 bg-brand-cream/5 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-gold/20 transition-colors">
-                                <Truck size={32} className="text-brand-gold" />
-                            </div>
-                            <h3 className="text-2xl font-heading font-bold mb-4">SAFELY DELIVERED</h3>
-                            <p className="text-brand-cream/70 leading-relaxed">
-                                We do our best to ensure that your coffee reaches you properly packaged, completely fresh and well in time. Freshness sealed for 6 weeks.
-                            </p>
-                        </div>
-                    </div>
+                    <MagicBento
+                        cards={[
+                            {
+                                title: "ETHICALLY SOURCED",
+                                description: "We work closely with producers to ensure that the beans are of the highest quality, grown sustainably and traded responsibly from farms in Ethiopia, Colombia, and Guatemala.",
+                                label: "Sourcing",
+                                icon: <Sprout size={32} className="text-brand-gold" />
+                            },
+                            {
+                                title: "FRESHLY ROASTED",
+                                description: "We specially roast your coffee in our in-house, state-of-the-art coffee roaster with specific profiles to ensure optimal flavour notes and potent aromatics.",
+                                label: "Roasting",
+                                icon: <ThermometerSun size={32} className="text-brand-gold" />
+                            },
+                            {
+                                title: "SAFELY DELIVERED",
+                                description: "We do our best to ensure that your coffee reaches you properly packaged, completely fresh and well in time. Freshness sealed for 6 weeks.",
+                                label: "Delivery",
+                                icon: <Truck size={32} className="text-brand-gold" />
+                            }
+                        ]}
+                        textAutoHide={true}
+                        enableStars
+                        enableSpotlight
+                        enableBorderGlow={true}
+                        enableTilt={false}
+                        enableMagnetism={false}
+                        clickEffect
+                        spotlightRadius={400}
+                        particleCount={12}
+                        glowColor="132, 0, 255"
+                        disableAnimations={false}
+                    />
                 </div>
             </section>
 
@@ -82,11 +82,12 @@ export default function OurCoffeePage() {
                         </p>
                     </div>
                     <div className="flex-1 relative h-[500px] w-full bg-brand-dark rounded-2xl overflow-hidden shadow-2xl">
-                        {/* Placeholder for Map/Farm Image */}
-                        <div className="absolute inset-0 bg-brand-cream/10 flex items-center justify-center">
-                            <Globe size={64} className="text-brand-cream/20" />
-                            <span className="ml-4 font-heading font-bold text-2xl text-brand-cream/30">ORIGIN MAP</span>
-                        </div>
+                        <Image
+                            src="/products/origin-map.jpg"
+                            alt="Coffee Farm Origin Map"
+                            fill
+                            className="object-cover"
+                        />
                     </div>
                 </div>
             </section>
@@ -123,7 +124,7 @@ export default function OurCoffeePage() {
                         </div>
                     </div>
                     <div className="flex-1 relative h-[500px] w-full bg-brand-cream/5 rounded-2xl overflow-hidden shadow-2xl group">
-                        <Image src="/products/dripper.svg" alt="Roasting" fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
+                        <Image src="/products/process.jpg" alt="Roasting Process" fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
                     </div>
                 </div>
             </section>
@@ -160,19 +161,25 @@ export default function OurCoffeePage() {
             <section className="py-24 px-6 bg-brand-dark">
                 <div className="container mx-auto max-w-7xl text-center">
                     <h2 className="text-4xl font-heading font-bold mb-12">UNDERSTANDING COFFEE</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        {[
-                            { title: "Arabica vs. Robusta", desc: "Why we only use 100% Arabica beans for superior flavor and complexity." },
-                            { title: "Processing Methods", desc: "How Washed, Natural, and Honey processes change the taste profile." },
-                            { title: "Altitude & Terroir", desc: "Why high-altitude coffee grows slower and tastes sweeter." },
-                            { title: "Roast Levels", desc: "Understanding the spectrum from bright Light roasts to bold Dark roasts." }
-                        ].map((item, i) => (
-                            <div key={i} className="bg-brand-cream/5 p-6 rounded-xl border border-brand-cream/10 hover:border-brand-gold transition-colors text-left">
-                                <h3 className="text-lg font-bold font-heading mb-3 text-brand-gold">{item.title}</h3>
-                                <p className="text-sm opacity-60 leading-relaxed">{item.desc}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <MagicBento
+                        cards={[
+                            { title: "Arabica vs. Robusta", description: "Why we only use 100% Arabica beans for superior flavor and complexity.", label: "Beans" },
+                            { title: "Processing Methods", description: "How Washed, Natural, and Honey processes change the taste profile.", label: "Process" },
+                            { title: "Altitude & Terroir", description: "Why high-altitude coffee grows slower and tastes sweeter.", label: "Environment" },
+                            { title: "Roast Levels", description: "Understanding the spectrum from bright Light roasts to bold Dark roasts.", label: "Roast" }
+                        ]}
+                        textAutoHide={true}
+                        enableStars
+                        enableSpotlight
+                        enableBorderGlow={true}
+                        enableTilt={false}
+                        enableMagnetism={false}
+                        clickEffect
+                        spotlightRadius={400}
+                        particleCount={12}
+                        glowColor="132, 0, 255"
+                        disableAnimations={false}
+                    />
                     <div className="mt-12">
                         <Link href="/learn/brewing" className="inline-flex items-center text-brand-cream font-bold tracking-widest hover:text-brand-gold transition-colors">
                             LEARN MORE IN OUR BREWING GUIDES <ArrowRight size={16} className="ml-2" />
@@ -184,12 +191,26 @@ export default function OurCoffeePage() {
             {/* Product Showcase CTA */}
             <section className="py-24 px-6 bg-brand-cream/5 text-center">
                 <h2 className="text-4xl font-heading font-bold mb-8">EXPLORE OUR COFFEES</h2>
-                <div className="flex flex-wrap justify-center gap-4 mb-12">
-                    {["Single-Origin", "Special Blends", "Decaf", "Cold Brew Bags"].map(cat => (
-                        <div key={cat} className="px-6 py-3 rounded-lg border border-brand-cream/20 bg-brand-dark font-bold text-sm uppercase tracking-widest hover:border-brand-gold transition-colors cursor-pointer">
-                            {cat}
-                        </div>
-                    ))}
+                <div className="mb-12">
+                    <MagicBento
+                        cards={[
+                            { title: "Single-Origin", description: "Distinct flavor profiles from single estates.", label: "Origin" },
+                            { title: "Special Blends", description: "Expertly crafted combinations for perfect balance.", label: "Blend" },
+                            { title: "Decaf", description: "All the flavor, none of the caffeine.", label: "Decaf" },
+                            { title: "Cold Brew Bags", description: "Smooth, bold cold brew made easy at home.", label: "Brew" }
+                        ]}
+                        textAutoHide={true}
+                        enableStars
+                        enableSpotlight
+                        enableBorderGlow={true}
+                        enableTilt={false}
+                        enableMagnetism={false}
+                        clickEffect
+                        spotlightRadius={400}
+                        particleCount={12}
+                        glowColor="132, 0, 255"
+                        disableAnimations={false}
+                    />
                 </div>
                 <Link href="/shop" className="bg-brand-gold text-brand-dark px-10 py-4 rounded-full font-bold tracking-widest hover:bg-white transition-colors">
                     SHOP ALL COFFEE

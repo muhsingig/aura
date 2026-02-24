@@ -1,5 +1,8 @@
 "use client";
 
+import MagicBento, { BentoCardData } from "@/components/MagicBento";
+import Prism from "@/components/Prism";
+import SpotlightCard from "@/components/SpotlightCard";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -50,47 +53,47 @@ const Card = ({ children, className, delay = 0 }: { children: React.ReactNode; c
 const tiers = [
     {
         name: "BRONZE",
-        range: "0-499 Gems",
+        range: "0-499 Points",
         color: "text-amber-700",
         borderColor: "border-amber-700/50",
         bgGradient: "from-amber-900/20 to-transparent",
         benefits: [
             "Free birthday reward",
-            "1 Gem per $1 spent",
+            "1 Point per $1 spent",
             "Early access to new menu items",
             "Monthly \"Free Boost Monday\"",
             "Personalized offers",
-            "Gems valid for 6 months"
+            "Points valid for 6 months"
         ]
     },
     {
         name: "SILVER",
-        range: "500-2,499 Gems",
+        range: "500-2,499 Points",
         color: "text-gray-300",
         borderColor: "border-gray-300/50",
         bgGradient: "from-gray-500/20 to-transparent",
         benefits: [
             "All Bronze benefits",
-            "1.2 Gems per $1 spent",
-            "2.4 Gems with reusable cup",
-            "Gems never expire",
+            "1.2 Points per $1 spent",
+            "2.4 Points with reusable cup",
+            "Points never expire",
             "Birthday reward valid for 7 days",
-            "4+ Double Gem Days per year",
+            "4+ Double Point Days per year",
             "Priority customer service"
         ]
     },
     {
         name: "GOLD",
-        range: "2,500+ Gems",
+        range: "2,500+ Points",
         color: "text-brand-gold",
         borderColor: "border-brand-gold/50",
         bgGradient: "from-brand-gold/20 to-transparent",
         benefits: [
             "All Silver benefits",
-            "1.7 Gems per $1 spent",
-            "3.4 Gems with reusable cup",
+            "1.7 Points per $1 spent",
+            "3.4 Points with reusable cup",
             "Birthday reward valid for 14 days",
-            "8+ Double Gem Days per year",
+            "8+ Double Point Days per year",
             "Exclusive tasting events",
             "Limited-edition merchandise access",
             "Complimentary size upgrades",
@@ -100,27 +103,27 @@ const tiers = [
 ];
 
 const earnMethods = [
-    { icon: Coffee, title: "Purchase", desc: "1-1.7 Gems per $1 spent" },
-    { icon: Gem, title: "Bring Your Cup", desc: "Double Gems on every drink" },
-    { icon: Gift, title: "Birthday", desc: "Bonus Gems in your birthday month" },
-    { icon: CreditCard, title: "Reload", desc: "10 Gems for $30+, 25 Gems for $50+" },
-    { icon: Star, title: "Challenges", desc: "Bonus Gems for completing goals" },
-    { icon: Smartphone, title: "Referrals", desc: "Earn when friends join" }
+    { icon: <Coffee size={24} />, title: "Purchase", desc: "1-1.7 Points per $1 spent" },
+    { icon: <Gem size={24} />, title: "Bring Your Cup", desc: "Double Points on every drink" },
+    { icon: <Gift size={24} />, title: "Birthday", desc: "Bonus Points in your birthday month" },
+    { icon: <CreditCard size={24} />, title: "Reload", desc: "10 Points for $30+, 25 Points for $50+" },
+    { icon: <Star size={24} />, title: "Challenges", desc: "Bonus Points for completing goals" },
+    { icon: <Smartphone size={24} />, title: "Referrals", desc: "Earn when friends join" }
 ];
 
 const rewards = [
-    { gems: 25, title: "Customize", desc: "Extra shot, syrup, or alt milk", value: "$1" },
-    { gems: 60, title: "$2 Off", desc: "Save on any item", value: "$2" },
-    { gems: 100, title: "Brewed & Bakery", desc: "Hot coffee, tea, or snack", value: "$6" },
-    { gems: 200, title: "Handcrafted", desc: "Latte, Frappe, or Hot Breakfast", value: "$10" },
-    { gems: 300, title: "Lunch & Packaged", desc: "Sandwich, Box, or Coffee Beans", value: "$16" },
-    { gems: 400, title: "Merch", desc: "Aura Mugs, Tumblers & More", value: "$20" }
+    { points: 25, title: "Customize", desc: "Extra shot, syrup, or alt milk", value: "$1" },
+    { points: 60, title: "$2 Off", desc: "Save on any item", value: "$2" },
+    { points: 100, title: "Brewed & Bakery", desc: "Hot coffee, tea, or snack", value: "$6" },
+    { points: 200, title: "Handcrafted", desc: "Latte, Frappe, or Hot Breakfast", value: "$10" },
+    { points: 300, title: "Lunch & Packaged", desc: "Sandwich, Box, or Coffee Beans", value: "$16" },
+    { points: 400, title: "Merch", desc: "Aura Mugs, Tumblers & More", value: "$20" }
 ];
 
 const faqs = [
     { q: "How do I join?", a: "Simply download the Aura app or sign up on our website. It's completely free!" },
-    { q: "How long do Gems last?", a: "For Bronze members, Gems expire after 6 months. For Silver and Gold members, Gems never expire!" },
-    { q: "How do I move up tiers?", a: "Earn Gems through purchases and challenges. Once you hit the threshold (500 for Silver, 2500 for Gold), you're instantly upgraded." },
+    { q: "How long do Points last?", a: "For Bronze members, Points expire after 6 months. For Silver and Gold members, Points never expire!" },
+    { q: "How do I move up tiers?", a: "Earn Points through purchases and challenges. Once you hit the threshold (500 for Silver, 2500 for Gold), you're instantly upgraded." },
     { q: "Can I share rewards?", a: "Rewards are currently non-transferable and linked to your personal account." }
 ];
 
@@ -144,7 +147,7 @@ export default function RewardsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-6xl md:text-9xl font-heading font-bold text-brand-cream mb-6 tracking-tighter"
                     >
-                        AURA<span className="text-brand-gold">REWARDS</span>
+                        AURA<span className="text-brand-gold"> POINTS</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
@@ -160,7 +163,7 @@ export default function RewardsPage() {
                         transition={{ delay: 0.4 }}
                     >
                         <button className="px-10 py-5 bg-brand-gold text-brand-dark font-sans font-bold text-lg tracking-widest rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)]">
-                            JOIN FREE
+                            JOIN AURA POINTS
                         </button>
                     </motion.div>
                 </div>
@@ -171,9 +174,9 @@ export default function RewardsPage() {
                 <Heading>HOW IT WORKS</Heading>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
                     {[
-                        { title: "Join Aura Rewards", desc: "Download the app and create your free account.", icon: Smartphone },
-                        { title: "Earn Gems", desc: "Collect Gems with every order. Mobile or in-store.", icon: Gem },
-                        { title: "Get Rewarded", desc: "Redeem Gems for drinks, food, and merch.", icon: Gift }
+                        { title: "Join Aura Points", desc: "Download the app and create your free account.", icon: Smartphone },
+                        { title: "Earn Points", desc: "Collect Points with every order. Mobile or in-store.", icon: Gem },
+                        { title: "Get Rewarded", desc: "Redeem Points for drinks, food, and merch.", icon: Gift }
                     ].map((step, i) => (
                         <Card key={i} delay={i * 0.2} className="flex flex-col items-center border-none bg-transparent">
                             <div className="w-20 h-20 rounded-full bg-brand-cream/5 flex items-center justify-center mb-6 text-brand-gold border border-brand-gold/20">
@@ -186,12 +189,12 @@ export default function RewardsPage() {
                 </div>
             </Section>
 
-            {/* 3. Membership Tiers */}
+            {/* 3. Membership Tiers - Remove PixelCard Animation */}
             <Section className="bg-brand-cream/5">
                 <Heading>CHOOSE YOUR LEVEL</Heading>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {tiers.map((tier, i) => (
-                        <Card key={i} delay={i * 0.1} className={cn("relative overflow-hidden border-2", tier.borderColor)}>
+                        <Card key={i} delay={i * 0.1} className={cn("relative overflow-hidden border-2 h-full", tier.borderColor)}>
                             <div className={cn("absolute inset-0 bg-gradient-to-b opacity-20 pointer-events-none", tier.bgGradient)} />
                             <div className="relative z-10">
                                 <h3 className={cn("text-3xl font-heading font-bold mb-1 tracking-tighter", tier.name === 'GOLD' ? 'text-brand-gold' : 'text-brand-cream')}>{tier.name}</h3>
@@ -212,64 +215,86 @@ export default function RewardsPage() {
 
             {/* 4. Ways to Earn */}
             <Section>
-                <Heading>WAYS TO EARN GEMS</Heading>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-                    {earnMethods.map((method, i) => (
-                        <Card key={i} delay={i * 0.1} className="flex flex-col gap-4 hover:bg-brand-cream/10 transition-colors">
-                            <method.icon className="text-brand-gold" size={32} />
-                            <div>
-                                <h4 className="font-heading font-bold text-xl text-brand-cream mb-1">{method.title}</h4>
-                                <p className="text-sm text-brand-cream/60">{method.desc}</p>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
+                <Heading>WAYS TO EARN POINTS</Heading>
+                {/* Reusing MagicBento/Spotlight for consistency or just cards? User didn't specify special anim here, using previous MagicBento setup */}
+                <MagicBento
+                    cards={earnMethods.map(m => ({
+                        title: m.title,
+                        description: m.desc,
+                        label: "EARN",
+                        icon: m.icon
+                    }))}
+                    textAutoHide={true}
+                    enableStars={true}
+                    enableSpotlight={true}
+                    enableBorderGlow={true}
+                    enableTilt={false}
+                    enableMagnetism={false}
+                    clickEffect={true}
+                    spotlightRadius={400}
+                    particleCount={12}
+                    glowColor="132, 0, 255"
+                    disableAnimations={false}
+                />
             </Section>
 
-            {/* 5. Redeem Your Gems */}
+            {/* 5. Redeem Your Points - Wrapped in SpotlightCard */}
             <Section className="bg-gradient-to-b from-transparent to-brand-dark/50">
-                <Heading>REDEEM YOUR GEMS</Heading>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {rewards.map((reward, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                            className="bg-brand-cream text-brand-dark rounded-lg overflow-hidden group hover:scale-[1.02] transition-transform duration-300"
-                        >
-                            <div className="h-40 bg-brand-dark/10 flex items-center justify-center relative overflow-hidden">
-                                {/* Placeholder visuals */}
-                                <div className="absolute inset-0 bg-brand-gold/10 group-hover:bg-brand-gold/20 transition-colors" />
-                                <span className="font-heading font-bold text-6xl text-brand-dark/10 z-0 absolute">{reward.gems}</span>
-                                <GemIcon count={i + 1} />
-                            </div>
-                            <div className="p-6">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="font-heading font-bold text-2xl">{reward.gems} <span className="text-xs align-top opacity-60">GEMS</span></h3>
-                                    <span className="text-xs font-bold bg-brand-gold/20 text-brand-dark px-2 py-1 rounded">Value: {reward.value}</span>
-                                </div>
-                                <h4 className="font-bold text-lg mb-1">{reward.title}</h4>
-                                <p className="text-sm opacity-70 leading-relaxed">{reward.desc}</p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                <Heading>REDEEM YOUR POINTS</Heading>
+                <MagicBento
+                    cards={rewards.map((r) => ({
+                        title: r.title,
+                        description: r.desc,
+                        label: `${r.points} POINTS • VALUE ${r.value}`,
+                        icon: <GemIcon count={Math.ceil(r.points / 100)} />
+                    }))}
+                    textAutoHide={true}
+                    enableStars={true}
+                    enableSpotlight={true}
+                    enableBorderGlow={true}
+                    enableTilt={false}
+                    enableMagnetism={false}
+                    clickEffect={true}
+                    spotlightRadius={400}
+                    particleCount={12}
+                    glowColor="132, 0, 255"
+                    disableAnimations={false}
+                />
             </Section>
 
-            {/* 6. App Features */}
-            <Section className="bg-brand-gold text-brand-dark overflow-hidden">
-                <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* 6. App Features - Added Prism Background */}
+            <Section className="bg-brand-gold text-brand-dark overflow-hidden relative">
+                {/* Prism Animation Background */}
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
+                    <div style={{ width: '1080px', height: '1080px', position: 'relative' }}>
+                        <Prism
+                            height={3.5}
+                            baseWidth={5.5}
+                            animationType="rotate"
+                            glow={1}
+                            noise={0.5}
+                            transparent
+                            scale={3.6}
+                            hueShift={0}
+                            colorFrequency={1}
+                            hoverStrength={2}
+                            inertia={0.05}
+                            bloom={1}
+                            timeScale={0.5}
+                        />
+                    </div>
+                </div>
+
+                <div className="flex flex-col lg:flex-row items-center gap-12 relative z-10">
                     <div className="lg:w-1/2 ">
                         <Heading className="text-left text-brand-dark mb-6">THE AURA APP</Heading>
                         <p className="text-xl font-sans mb-8 opacity-80 leading-relaxed">
-                            The fastest way to your morning ritual. Skip the line, customize your drink, and track your Gems all in one place.
+                            The fastest way to your morning ritual. Skip the line, customize your drink, and track your Points all in one place.
                         </p>
                         <ul className="space-y-4 font-sans font-bold text-lg">
                             {[
                                 "Mobile ordering & payment",
-                                "Track your Gems balance",
+                                "Track your Points balance",
                                 "Find nearby Aura locations",
                                 "Customize favorite drinks",
                                 "Access exclusive rewards",
@@ -328,7 +353,7 @@ export default function RewardsPage() {
                 </div>
             </Section>
 
-            {/* 7. FAQ */}
+            {/* 7. FAQ - Reverted to Accordion (Removed MagicBento) */}
             <Section className="max-w-3xl mx-auto">
                 <Heading>FREQUENTLY ASKED</Heading>
                 <div className="space-y-4">
@@ -351,19 +376,42 @@ export default function RewardsPage() {
                 </div>
             </Section>
 
-            {/* 7. Final CTA */}
-            <section className="py-32 px-6 text-center bg-brand-gold text-brand-dark">
-                <h2 className="text-5xl md:text-7xl font-heading font-bold mb-6 tracking-tighter">START EARNING TODAY</h2>
-                <p className="text-xl font-sans font-bold mb-10 max-w-xl mx-auto opacity-80">
-                    It's free to join and free to earn. Download the app to get started.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button className="px-8 py-4 bg-brand-dark text-brand-gold font-bold tracking-widest rounded-lg hover:bg-white hover:text-brand-dark transition-all shadow-xl">
-                        DOWNLOAD FOR IOS
-                    </button>
-                    <button className="px-8 py-4 bg-brand-dark text-brand-gold font-bold tracking-widest rounded-lg hover:bg-white hover:text-brand-dark transition-all shadow-xl">
-                        DOWNLOAD FOR ANDROID
-                    </button>
+            {/* 8. Final CTA - Added Prism Background */}
+            <section className="py-32 px-6 text-center bg-brand-gold text-brand-dark relative overflow-hidden">
+                {/* Prism Animation Background */}
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
+                    <div style={{ width: '1080px', height: '1080px', position: 'relative' }}>
+                        <Prism
+                            height={3.5}
+                            baseWidth={5.5}
+                            animationType="rotate"
+                            glow={1}
+                            noise={0.5}
+                            transparent
+                            scale={3.6}
+                            hueShift={0}
+                            colorFrequency={1}
+                            hoverStrength={2}
+                            inertia={0.05}
+                            bloom={1}
+                            timeScale={0.5}
+                        />
+                    </div>
+                </div>
+
+                <div className="relative z-10">
+                    <h2 className="text-5xl md:text-7xl font-heading font-bold mb-6 tracking-tighter">START EARNING TODAY</h2>
+                    <p className="text-xl font-sans font-bold mb-10 max-w-xl mx-auto opacity-80">
+                        It's free to join and free to earn. Download the app to get started.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button className="px-8 py-4 bg-brand-dark text-brand-gold font-bold tracking-widest rounded-lg hover:bg-white hover:text-brand-dark transition-all shadow-xl">
+                            DOWNLOAD FOR IOS
+                        </button>
+                        <button className="px-8 py-4 bg-brand-dark text-brand-gold font-bold tracking-widest rounded-lg hover:bg-white hover:text-brand-dark transition-all shadow-xl">
+                            DOWNLOAD FOR ANDROID
+                        </button>
+                    </div>
                 </div>
             </section>
 

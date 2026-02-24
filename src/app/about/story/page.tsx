@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Coffee, Users, Lightbulb, Heart, MapPin, ArrowRight } from "lucide-react";
+import MagicBento from "@/components/MagicBento";
+import ElectricBorder from "@/components/ElectricBorder";
 
 export default function OurStoryPage() {
     return (
@@ -59,45 +61,41 @@ export default function OurStoryPage() {
                         <h2 className="text-4xl font-heading font-bold mt-2">WHAT WE STAND FOR</h2>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[
+                    <MagicBento
+                        cards={[
                             {
-                                icon: Heart,
+                                icon: <Heart size={24} />,
                                 title: "HAPPINESS & DELIGHT",
-                                desc: "Every cup of coffee is uniquely delightful and personal. We love bringing that moment of delight to our customers."
+                                description: "Every cup of coffee is uniquely delightful and personal. We love bringing that moment of delight to our customers."
                             },
                             {
-                                icon: Users,
+                                icon: <Users size={24} />,
                                 title: "COMMUNITY",
-                                desc: "Our community of customers is our family. And we strive to serve our family with passion and care everyday."
+                                description: "Our community of customers is our family. And we strive to serve our family with passion and care everyday."
                             },
                             {
-                                icon: Lightbulb,
+                                icon: <Lightbulb size={24} />,
                                 title: "INNOVATION",
-                                desc: "We believe in constant innovation to design coffees for both the experienced and novice palate."
+                                description: "We believe in constant innovation to design coffees for both the experienced and novice palate."
                             },
                             {
-                                icon: Coffee,
+                                icon: <Coffee size={24} />,
                                 title: "INCLUSIVITY",
-                                desc: "We believe our coffees are for everyone. Everyone's welcome at Aura Coffee."
+                                description: "We believe our coffees are for everyone. Everyone's welcome at Aura Coffee."
                             }
-                        ].map((item, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="bg-brand-dark border border-brand-cream/10 p-8 rounded-xl hover:border-brand-gold/50 transition-colors group"
-                            >
-                                <div className="w-12 h-12 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 group-hover:scale-110 transition-transform">
-                                    <item.icon size={24} />
-                                </div>
-                                <h3 className="text-xl font-heading font-bold mb-4">{item.title}</h3>
-                                <p className="text-brand-cream/60 leading-relaxed text-sm">{item.desc}</p>
-                            </motion.div>
-                        ))}
-                    </div>
+                        ]}
+                        textAutoHide={true}
+                        enableStars
+                        enableSpotlight
+                        enableBorderGlow={true}
+                        enableTilt={false}
+                        enableMagnetism={false}
+                        clickEffect
+                        spotlightRadius={400}
+                        particleCount={12}
+                        glowColor="132, 0, 255"
+                        disableAnimations={false}
+                    />
                 </div>
             </section>
 
@@ -116,13 +114,13 @@ export default function OurStoryPage() {
             {/* Image Gallery */}
             <section className="grid grid-cols-1 md:grid-cols-2">
                 <div className="h-[400px] md:h-[600px] bg-brand-cream/5 relative group overflow-hidden">
-                    <Image src="/products/dripper.svg" alt="Brewing" fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
+                    <Image src="/products/brewing.jpg" alt="Masterful Brewing" fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 to-transparent flex items-end p-10">
                         <h3 className="text-2xl font-heading font-bold">MASTERFUL BREWING</h3>
                     </div>
                 </div>
                 <div className="h-[400px] md:h-[600px] bg-brand-cream/5 relative group overflow-hidden">
-                    <Image src="/products/ethiopia.svg" alt="Roasting" fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
+                    <Image src="/products/sourcing.jpg" alt="Ethical Sourcing" fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 to-transparent flex items-end p-10">
                         <h3 className="text-2xl font-heading font-bold">ETHICAL SOURCING</h3>
                     </div>
@@ -134,18 +132,43 @@ export default function OurStoryPage() {
                 <div className="container mx-auto max-w-6xl">
                     <div className="flex flex-col md:flex-row items-center gap-16">
                         <div className="flex-1">
-                            <span className="text-brand-gold font-bold tracking-widest text-sm uppercase">The People</span>
-                            <h2 className="text-5xl font-heading font-bold mt-2 mb-6">OUR TEAM</h2>
-                            <p className="text-xl opacity-70 leading-relaxed mb-8">
-                                We work in harmony to bring the most delicious, fresh and high-quality coffee to your cup. Our baristas, roasters and servers are always excited to ensure that you have the most wonderful experience at Aura Coffee.
-                            </p>
-                            <Link href="/about/careers" className="inline-flex items-center text-brand-gold font-bold tracking-widest hover:gap-2 transition-all">
-                                JOIN THE FAMILY <ArrowRight size={16} className="ml-2" />
-                            </Link>
+                            <ElectricBorder
+                                color="#ffc800"
+                                speed={0.7}
+                                chaos={0.01}
+                                thickness={2}
+                                style={{ borderRadius: 16 }}
+                                className="h-full block"
+                            >
+                                <div className="bg-brand-cream/5 border border-brand-cream/10 p-10 rounded-2xl h-full flex flex-col justify-center">
+                                    <span className="text-brand-gold font-bold tracking-widest text-sm uppercase">The People</span>
+                                    <h2 className="text-5xl font-heading font-bold mt-2 mb-6">OUR TEAM</h2>
+                                    <p className="text-xl opacity-70 leading-relaxed mb-8">
+                                        We work in harmony to bring the most delicious, fresh and high-quality coffee to your cup. Our baristas, roasters and servers are always excited to ensure that you have the most wonderful experience at Aura Coffee.
+                                    </p>
+                                    <Link href="/about/careers" className="inline-flex items-center text-brand-gold font-bold tracking-widest hover:gap-2 transition-all">
+                                        JOIN THE FAMILY <ArrowRight size={16} className="ml-2" />
+                                    </Link>
+                                </div>
+                            </ElectricBorder>
                         </div>
                         <div className="flex-1 grid grid-cols-2 gap-4">
-                            <div className="bg-brand-cream/5 rounded-2xl h-64 w-full animate-pulse" /> {/* Placeholder for team photo */}
-                            <div className="bg-brand-cream/5 rounded-2xl h-64 w-full mt-8 animate-pulse" /> {/* Placeholder for team photo */}
+                            <div className="bg-brand-cream/5 rounded-2xl h-64 w-full relative overflow-hidden shadow-xl">
+                                <Image
+                                    src="/products/team1.jpg"
+                                    alt="Aura Coffee Team 1"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="bg-brand-cream/5 rounded-2xl h-64 w-full mt-8 relative overflow-hidden shadow-xl">
+                                <Image
+                                    src="/products/team2.jpg"
+                                    alt="Aura Coffee Team 2"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,18 +183,53 @@ export default function OurStoryPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className="bg-brand-dark rounded-xl overflow-hidden shadow-xl">
-                                <div className="h-64 bg-brand-cream/10 relative">
-                                    <div className="absolute inset-0 flex items-center justify-center text-brand-cream/20 font-bold">CAFE INTERIOR {i}</div>
-                                </div>
-                                <div className="p-8">
-                                    <h3 className="text-xl font-bold font-heading mb-2">AURA DOWNTOWN</h3>
-                                    <p className="text-sm opacity-60 mb-4">123 Coffee Lane, City Center</p>
-                                    <p className="text-xs font-bold tracking-widest text-brand-gold uppercase">OPEN 7AM - 8PM</p>
-                                </div>
+                        <div className="bg-brand-dark rounded-xl overflow-hidden shadow-xl">
+                            <div className="h-64 bg-brand-cream/10 relative">
+                                <Image
+                                    src="/products/cafe1.jpg"
+                                    alt="Aura Downtown Cafe Interior"
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
-                        ))}
+                            <div className="p-8">
+                                <h3 className="text-xl font-bold font-heading mb-2">AURA DOWNTOWN</h3>
+                                <p className="text-sm opacity-60 mb-4">123 Coffee Lane, City Center</p>
+                                <p className="text-xs font-bold tracking-widest text-brand-gold uppercase">OPEN 7AM - 8PM</p>
+                            </div>
+                        </div>
+
+                        <div className="bg-brand-dark rounded-xl overflow-hidden shadow-xl">
+                            <div className="h-64 bg-brand-cream/10 relative">
+                                <Image
+                                    src="/products/cafe2.jpg"
+                                    alt="Aura Uptown Cafe Interior"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="p-8">
+                                <h3 className="text-xl font-bold font-heading mb-2">AURA UPTOWN</h3>
+                                <p className="text-sm opacity-60 mb-4">456 Espresso Ave, Arts District</p>
+                                <p className="text-xs font-bold tracking-widest text-brand-gold uppercase">OPEN 6AM - 9PM</p>
+                            </div>
+                        </div>
+
+                        <div className="bg-brand-dark rounded-xl overflow-hidden shadow-xl">
+                            <div className="h-64 bg-brand-cream/10 relative">
+                                <Image
+                                    src="/products/cafe3.jpg"
+                                    alt="Aura Riverside Cafe Interior"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="p-8">
+                                <h3 className="text-xl font-bold font-heading mb-2">AURA RIVERSIDE</h3>
+                                <p className="text-sm opacity-60 mb-4">789 River Walk, West End</p>
+                                <p className="text-xs font-bold tracking-widest text-brand-gold uppercase">OPEN 8AM - 10PM</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="text-center">
