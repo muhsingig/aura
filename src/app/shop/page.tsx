@@ -113,22 +113,22 @@ export default function Shop() {
 
     useEffect(() => {
         async function fetchProducts() {
-            if (!appSupabase) {
-                console.log("Supabase not configured, using fallback data");
+            try {
+                const { data, error } = await appSupabase
+                    .from('products')
+                    .select('*');
+
+                if (error) {
+                    console.error("Error fetching products:", error);
+                } else if (data && data.length > 0) {
+                    setProducts(data);
+                }
+            } catch (err) {
+                console.error("Error talking to product service:", err);
+                // On any failure, keep using the fallback products silently.
+            } finally {
                 setLoading(false);
-                return;
             }
-
-            const { data, error } = await appSupabase
-                .from('products')
-                .select('*');
-
-            if (error) {
-                console.error("Error fetching products:", error);
-            } else if (data && data.length > 0) {
-                setProducts(data);
-            }
-            setLoading(false);
         }
 
         fetchProducts();
