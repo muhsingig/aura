@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ProductModal, { Product } from "@/components/ProductModal";
-import { appSupabase } from "@/lib/supabase";
 import TiltedCard from "@/components/TiltedCard";
 
-// Fallback data if Supabase isn't connected
 const fallbackProducts: Product[] = [
     {
         id: "p1",
@@ -112,26 +110,8 @@ export default function Shop() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchProducts() {
-            try {
-                const { data, error } = await appSupabase
-                    .from('products')
-                    .select('*');
-
-                if (error) {
-                    console.error("Error fetching products:", error);
-                } else if (data && data.length > 0) {
-                    setProducts(data);
-                }
-            } catch (err) {
-                console.error("Error talking to product service:", err);
-                // On any failure, keep using the fallback products silently.
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchProducts();
+        setProducts(fallbackProducts);
+        setLoading(false);
     }, []);
 
     return (

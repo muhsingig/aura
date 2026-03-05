@@ -1,57 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CardNav from "./CardNav";
 import { useCart } from "@/context/CartContext";
-import { appSupabase } from "@/lib/supabase";
+import { useAuth } from "@/context/AuthContext";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
 import LoginModal from "./LoginModal";
 import { useRouter } from "next/navigation";
 
 export default function CardNavWrapper() {
     const { toggleCart, cartCount } = useCart();
+    const { user } = useAuth();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
-    const [user, setUser] = useState<any>(null);
-    const [profile, setProfile] = useState<any>(null);
     const router = useRouter();
-
-    useEffect(() => {
-        if (!appSupabase) return;
-
-        // Check active session
-        appSupabase.auth.getSession().then(({ data: { session } }) => {
-            setUser(session?.user ?? null);
-            if (session?.user) fetchProfile(session.user.id);
-        });
-
-        // Listen for auth changes
-        const { data: { subscription } } = appSupabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
-            if (session?.user) {
-                fetchProfile(session.user.id);
-            } else {
-                setProfile(null);
-            }
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
-
-    const fetchProfile = async (userId: string) => {
-        if (!appSupabase) return;
-        const { data } = await appSupabase
-            .from('profiles')
-            .select('username, full_name')
-            .eq('id', userId)
-            .single();
-
-        if (data) setProfile(data);
-    };
 
     const handleLogout = async (e: React.MouseEvent) => {
         e.preventDefault();
-        if (appSupabase) {
-            await appSupabase.auth.signOut();
-            router.push("/");
+        if (auth) {
+            try {
+                await signOut(auth);
+                router.push("/");
+            } catch (error) {
+                console.error("Error signing out:", error);
+            }
         }
     };
 

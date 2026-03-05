@@ -3,54 +3,26 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import { appSupabase } from "@/lib/supabase";
+import { useState } from "react";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
 import LoginModal from "./LoginModal";
 import GooeyNav from "./GooeyNav";
 
 export default function Navbar() {
     const { toggleCart, cartCount } = useCart();
+    const { user } = useAuth();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
-    const [user, setUser] = useState<any>(null);
-    const [profile, setProfile] = useState<any>(null);
-
-    useEffect(() => {
-        if (!appSupabase) return;
-
-        // Check active session
-        appSupabase.auth.getSession().then(({ data: { session } }) => {
-            setUser(session?.user ?? null);
-            if (session?.user) fetchProfile(session.user.id);
-        });
-
-        // Listen for auth changes
-        const { data: { subscription } } = appSupabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
-            if (session?.user) {
-                fetchProfile(session.user.id);
-            } else {
-                setProfile(null);
-            }
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
-
-    const fetchProfile = async (userId: string) => {
-        if (!appSupabase) return;
-        const { data } = await appSupabase
-            .from('profiles')
-            .select('username, full_name')
-            .eq('id', userId)
-            .single();
-
-        if (data) setProfile(data);
-    };
 
     const handleLogout = async () => {
-        if (appSupabase) {
-            const { error } = await appSupabase.auth.signOut();
+        if (auth) {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Error signing out:", error);
+            }
         }
     };
 
@@ -107,7 +79,7 @@ export default function Navbar() {
                             },
                             ...(user ? [
                                 {
-                                    label: (profile?.username || profile?.full_name || user.email?.split('@')[0] || "USER").toUpperCase().slice(0, 10),
+                                    label: (user.displayName || user.email?.split('@')[0] || "USER").toUpperCase().slice(0, 10),
                                     href: "/profile"
                                 },
                                 {

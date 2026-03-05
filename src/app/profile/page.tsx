@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { appSupabase } from "@/lib/supabase";
+import { useAuth } from "@/context/AuthContext";
 import Lanyard from "@/components/Lanyard";
 
 export default function Profile() {
-    const [user, setUser] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    const { user, loading } = useAuth();
     const [uploading, setUploading] = useState(false);
-    const [profile, setProfile] = useState<any>(null);
     const [fullName, setFullName] = useState("");
     const [username, setUsername] = useState("");
     const [website, setWebsite] = useState("");
@@ -18,71 +16,17 @@ export default function Profile() {
     const router = useRouter();
 
     useEffect(() => {
-        const getProfile = async () => {
-            try {
-                const { data: { session } } = await appSupabase.auth.getSession();
-
-                if (!session) {
-                    router.push("/");
-                    return;
-                }
-
-                setUser(session.user);
-
-                const { data, error, status } = await appSupabase
-                    .from('profiles')
-                    .select(`id, username, full_name, website, avatar_url`)
-                    .eq('id', session.user.id)
-                    .single();
-
-                if (error && status !== 406) {
-                    throw error;
-                }
-
-                if (data) {
-                    setProfile(data);
-                    setFullName(data.full_name || "");
-                    setUsername(data.username || "");
-                    setWebsite(data.website || "");
-                }
-            } catch (error) {
-                console.error("Error loading profile:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        getProfile();
-    }, [router]);
+        if (!loading && !user) {
+            router.push("/");
+        } else if (user) {
+            setFullName(user.displayName || "");
+            setUsername(user.displayName || "");
+        }
+    }, [user, loading, router]);
 
     const updateProfile = async () => {
-        try {
-            setUploading(true);
-
-            const { data: { session } } = await appSupabase.auth.getSession();
-            if (!session) throw new Error('No user on the session!');
-
-            const updates = {
-                id: session.user.id,
-                full_name: fullName,
-                username,
-                website,
-                updated_at: new Date().toISOString(),
-            };
-
-            const { error } = await appSupabase.from('profiles').upsert(updates);
-
-            if (error) {
-                throw error;
-            }
-            alert('Profile updated!');
-            setProfile(updates);
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            alert('Error updating profile!');
-        } finally {
-            setUploading(false);
-        }
+        alert("Editing profiles is temporarily disabled while we migrate systems.");
+        setIsEditing(false);
     };
 
     if (loading) return <div className="min-h-screen bg-brand-dark flex items-center justify-center text-brand-gold font-heading tracking-widest animate-pulse">LOADING PROFILE...</div>;

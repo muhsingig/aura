@@ -24,6 +24,8 @@ import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
 // ... imports
 
+import { AuthProvider } from "@/context/AuthContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,11 +36,13 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-brand-dark text-brand-cream overflow-x-hidden`}
       >
-        <CartProvider>
-          <Navbar />
-          <CartDrawer />
-          {children}
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Navbar />
+            <CartDrawer />
+            {children}
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { appSupabase } from "@/lib/supabase";
+import { auth } from "@/lib/firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { BorderBeam } from "./magicui/border-beam";
 
 interface LoginModalProps {
@@ -24,36 +25,35 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         setError(null);
         setMessage(null);
 
-        if (!appSupabase) {
-            setError("Supabase is not configured.");
+        if (!auth) {
+            setError("Firebase Authentication is not configured.");
             setLoading(false);
             return;
         }
 
         try {
             if (isSignUp) {
-                const { error, data } = await appSupabase.auth.signUp({
-                    email,
-                    password,
-                });
-                if (error) throw error;
-                if (data.user && data.session) {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                if (userCredential.user) {
                     setMessage("Account created successfully!");
                     onClose();
-                } else {
-                    setMessage("Check your email for the confirmation link!");
                 }
             } else {
-                const { error } = await appSupabase.auth.signInWithPassword({ // Changed from supabase to appSupabase, and kept signInWithPassword
-                    email,
-                    password,
-                });
-                if (error) throw error;
+                await signInWithEmailAndPassword(auth, email, password);
                 setMessage("Logged in successfully!");
                 onClose();
             }
         } catch (err: any) {
-            setError(err.message || "An error occurred");
+            // Firebase error codes map nicely to user friendly messages
+            if (err.code === 'auth/email-already-in-use') {
+                setError("An account with this email already exists.");
+            } else if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+                setError("Invalid email or password.");
+            } else if (err.code === 'auth/weak-password') {
+                setError("Password should be at least 6 characters.");
+            } else {
+                setError(err.message || "An authentication error occurred.");
+            }
         } finally {
             setLoading(false);
         }
